@@ -1150,6 +1150,16 @@ VOID PaintSelection (
     UINTN YPosCur;
 
 
+    // Redraw both rows when tuned tools overlap loaders. Repainting a single
+    // loader would otherwise erase tools drawn over its selection background.
+    if (GlobalConfig.ToolRowTune != 0 && ToolRowCount != 0 &&
+        row1PosY < row0PosY + TileSizes[0] &&
+        row0PosY < row1PosY + TileSizes[1]
+    ) {
+        MainMenuStyle (Screen, State, MENU_FUNCTION_PAINT_ALL, NULL);
+        return;
+    }
+
     if ((State->CurrentSelection < State->InitialRow1) &&
         (
             (State->CurrentSelection > State->LastVisible) ||
