@@ -359,6 +359,21 @@ VOID UpdateScroll (
 ) {
     State->PreviousSelection = State->CurrentSelection;
 
+    // Follow the displayed row order when tuning moves tools above loaders.
+    // Compare centres so overlapping rows have a consistent direction.
+    if (State->ScrollMode == SCROLL_MODE_ICONS &&
+        GlobalConfig.ToolRowTune != 0 &&
+        IconRowCount != 0 && ToolRowCount != 0 &&
+        ToolRowPosY + TileSizes[1] / 2 < IconRowPosY + TileSizes[0] / 2
+    ) {
+        if (Movement == SCROLL_LINE_UP) {
+            Movement = SCROLL_LINE_DOWN;
+        }
+        else if (Movement == SCROLL_LINE_DOWN) {
+            Movement = SCROLL_LINE_UP;
+        }
+    }
+
     switch (Movement) {
         case SCROLL_NONE:
             // Do Nothing

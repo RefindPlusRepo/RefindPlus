@@ -487,6 +487,7 @@
 # Nonzero offsets are bounded to keep the tools and text above the hints
 # (or the screen bottom when hints are hidden). On screens too small for
 # the complete group, it is placed at the top and may be clipped.
+# Up/Down navigation follows the displayed order of the row centres.
 # Choose an offset that avoids overlapping the OS icons or banner.
 # Ignored in text mode and when no tools are displayed.
 #
