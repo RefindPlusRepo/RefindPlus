@@ -177,6 +177,7 @@ REFIT_CONFIG GlobalConfig = {
     .DynamicCSR                =                       0,
     .IconRowMove               =                       0,
     .IconRowTune               =                       0,
+    .ToolRowTune               =                       0,
     .BadRamTagType             =                       0,
     .ScreenR                   =                      -1,
     .ScreenG                   =                      -1,
