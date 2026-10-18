@@ -359,6 +359,21 @@ VOID UpdateScroll (
 ) {
     State->PreviousSelection = State->CurrentSelection;
 
+    // Follow the displayed row order when tuning moves tools above loaders.
+    // Compare centres so overlapping rows have a consistent direction.
+    if (State->ScrollMode == SCROLL_MODE_ICONS &&
+        GlobalConfig.ToolRowTune != 0 &&
+        IconRowCount != 0 && ToolRowCount != 0 &&
+        ToolRowPosY + TileSizes[1] / 2 < IconRowPosY + TileSizes[0] / 2
+    ) {
+        if (Movement == SCROLL_LINE_UP) {
+            Movement = SCROLL_LINE_DOWN;
+        }
+        else if (Movement == SCROLL_LINE_DOWN) {
+            Movement = SCROLL_LINE_UP;
+        }
+    }
+
     switch (Movement) {
         case SCROLL_NONE:
             // Do Nothing
@@ -1149,6 +1164,16 @@ VOID PaintSelection (
     UINTN YPosPrev;
     UINTN YPosCur;
 
+
+    // Redraw both rows when tuned tools overlap loaders. Repainting a single
+    // loader would otherwise erase tools drawn over its selection background.
+    if (GlobalConfig.ToolRowTune != 0 && ToolRowCount != 0 &&
+        row1PosY < row0PosY + TileSizes[0] &&
+        row0PosY < row1PosY + TileSizes[1]
+    ) {
+        MainMenuStyle (Screen, State, MENU_FUNCTION_PAINT_ALL, NULL);
+        return;
+    }
 
     if ((State->CurrentSelection < State->InitialRow1) &&
         (
@@ -1966,6 +1991,51 @@ VOID FreeLoaderEntry (
     LOG_SEP(L"X");
 } // static VOID FreeLoaderEntry()
 
+// Tune the tools independently, retaining the original layout for zero.
+static
+UINTN ComputeToolRowPosY (
+    IN UINTN DefaultPosY
+) {
+    INTN Offset;
+    INTN Position;
+    INTN MaxPosition;
+
+
+    if (GlobalConfig.ToolRowTune == 0 || ToolRowCount == 0) {
+        return DefaultPosY;
+    }
+
+    // Keep the selection tile, label and timeout above the fixed hints.
+    // Reserve text space even with hidden labels: painting clears that line.
+    MaxPosition = (INTN) ScreenH - (INTN) TileSizes[1] - TILE_YSPACING
+        - 2 * (INTN) TextLineHeight();
+    if (!(GlobalConfig.HideUIFlags & HIDEUI_FLAG_HINTS)) {
+        MaxPosition -= 3 * (INTN) egGetFontHeight();
+    }
+    if (MaxPosition < 0) {
+        MaxPosition = 0;
+    }
+
+    // Bound the operands before signed subtraction, including extreme input.
+    Position = (DefaultPosY > ScreenH) ? (INTN) ScreenH : (INTN) DefaultPosY;
+    Offset = GlobalConfig.ToolRowTune;
+    if (Offset > (INTN) ScreenH) {
+        Offset = (INTN) ScreenH;
+    }
+    else if (Offset < -(INTN) ScreenH) {
+        Offset = -(INTN) ScreenH;
+    }
+    Position -= Offset;
+    if (Position < 0) {
+        Position = 0;
+    }
+    else if (Position > MaxPosition) {
+        Position = MaxPosition;
+    }
+
+    return (UINTN) Position;
+} // static UINTN ComputeToolRowPosY()
+
 static
 VOID GetStateInfo (
     IN REFIT_MENU_SCREEN *Screen,
@@ -1993,7 +2063,9 @@ VOID GetStateInfo (
     IconRowPosX = (ScreenW + TILE_XSPACING - (TileSizes[0] + TILE_XSPACING) * IconRowCount) >> 1;
     IconRowPosY = ComputeRow0PosY (TRUE);
     ToolRowPosX = (ScreenW + TILE_XSPACING - (TileSizes[1] + TILE_XSPACING) * ToolRowCount) >> 1;
-    ToolRowPosY = IconRowPosY + TileSizes[0] + TILE_YSPACING;
+    ToolRowPosY = ComputeToolRowPosY (
+        IconRowPosY + TileSizes[0] + TILE_YSPACING
+    );
 
 } // static VOID GetStateInfo()
 
@@ -3603,7 +3675,14 @@ UINTN FindMainMenuItem (
     row1PosX     =   ToolRowPosX;
     row1PosY     =   ToolRowPosY;
 
-    if (PosY >= row0PosY && PosY <= row0PosY + TileSizes[0]) {
+    // Tuned tools are painted over loaders if the rows overlap.
+    if (GlobalConfig.ToolRowTune != 0 && ToolRowCount != 0 &&
+        PosY >= row1PosY && PosY <= row1PosY + TileSizes[1] &&
+        PosX >= row1PosX && PosX < ScreenW - row1PosX
+    ) {
+        itemRow = 1;
+    }
+    else if (PosY >= row0PosY && PosY <= row0PosY + TileSizes[0]) {
         if (PosX <= row0PosX) {
             // Early Return
             return POINTER_LEFT_ARROW;

@@ -154,6 +154,7 @@ supply_nvme            |Enables an inbuilt NvmExpress driver
 supply_uefi            |Enables feature that emulates UEFI 2.x support on EFI 1.x units
 sync_nvram             |Resets nvRAM settings, such as BlueTooth, on some boot types if required
 sync_trust             |Works around some `Boot Chain of Trust` issues with T2/TPM chipped units
+tool_row_tune          |Independently fine tunes the vertical position of the EFI tools row
 transient_boot         |Disables feature that selects the last booted loader by default
 unicode_collation      |Provides fine tuned support for languages that require unicode text
 
