@@ -480,21 +480,6 @@
 #
 #icon_row_tune 5
 
-# Independently finetune the EFI tools row after the icon row settings above.
-# Positive pixel values move the tools up; negative values move them down,
-# matching the direction of 'icon_row_tune'. The OS icons stay in place.
-# The selection highlight, shared entry label and timeout follow the tools.
-# Nonzero offsets are bounded to keep the tools and text above the hints
-# (or the screen bottom when hints are hidden). On screens too small for
-# the complete group, it is placed at the top and may be clipped.
-# Up/Down navigation follows the displayed order of the row centres.
-# Choose an offset that avoids overlapping the OS icons or banner.
-# Ignored in text mode and when no tools are displayed.
-#
-# Defaults to Zero When Commented Out (Preserves the Existing Layout)
-#
-#tool_row_tune -40
-
 # RefindPlus will display up to 10 available Snapshot instances for BtrFS
 # entries by default. These can be accessed by pressing "F2" or "Insert",
 # after which the snapshots will appear as submenu items (along with
