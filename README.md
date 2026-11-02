@@ -27,7 +27,7 @@ RefindPlus is a fork of _`rEFInd`_ that provides extended functionality via enha
 > > [Uppercase]:- **REFINDPLUS**
 >
 > It _MAY_ be abbreviated as '**RP**' or '**rp**'. \
-> It _SHALL NOT_ be split or otherwise mutated.
+> It _MUST NOT_ be split or otherwise mutated.
 
 RefindPlus is particularly useful for those with additional configuration needs or that require advanced or otherwise non-standard (hence typically unavailable) options for running operating systems and uEFI utilities on Mac and PC.
 
@@ -39,7 +39,7 @@ Some RefindPlus Features:
 - Provides mitigation against boot failures and related issues on T2/TPM chipped units.
 - Provides PreBoot Configuration Screen on Apple Macs running GPUs without native EFI.
 - Extensive memory management improvements with associated speed and stability gains.
-- Accommodates BtrFS Snapshots, which are shown as SubScreen options when present.
+- Accommodates `BtrFS Snapshots`, which are offered as SubMenu options when present.
 - Provides improved text display support for languages that require unicode text.
 - Identifies and automatically handles `Ventoy` instances if present.
   - Rationalises binaries displayed.
@@ -85,7 +85,7 @@ Upstream post-release code updates are typically ported to RefindPlus as they ha
 >
 > Consider replacing upstream filesystem drivers with those packaged with RefindPlus as these are always either exactly the same as upstream versions or have had fixes applied.
 
-RefindPlus will function with the upstream configuration file, `refind.conf`, but users may wish to replace this with the RefindPlus configuration file, `config.conf`, to configure the additional options provided by RefindPlus. A sample RefindPlus configuration file is available here: [config.conf-sample-Dev](https://github.com/RefindPlusRepo/RefindPlus/blob/GOPFix/config.conf-sample-Dev).
+RefindPlus will function with the upstream configuration file, `refind.conf`, but users may wish to replace this with the RefindPlus configuration file, `config.conf`, to configure the additional options provided by RefindPlus. A sample RefindPlus configuration file is available here: [config.conf-sample](https://github.com/RefindPlusRepo/RefindPlus/blob/GOPFix/config.conf-sample).
 
 > [!TIP]
 >
@@ -137,7 +137,7 @@ hidden_icons_ignore    |Disables scanning for `.VolumeIcon` image icons if not r
 hidden_icons_prefer    |Prioritises `.VolumeIcon` and `.VolumeBadge` image icons when available
 icon_row_move          |Repositions the main screen icon rows (vertically)
 icon_row_tune          |Fine tunes the resulting `icon_row_move` outcome
-max_snapshots          |Allows configuring `BtrFS Snapshots` made available for booting
+max_snapshots          |Allows setting how many `BtrFS Snapshots` are made available
 mitigate_primed_buffer |Allows enhanced intervention to handle apparent primed keystroke buffers
 nvram_protect_ex       |Extends `NvramProtect`, if set, to Mac OS and `unknown` UEFI boots
 nvram_variable_limit   |Limits nvRAM write attempts to the specified variable size
@@ -201,21 +201,20 @@ In addition to the new functionality listed above, the following upstream config
 ## Divergence
 
 Significant visible implementation differences vis-a-vis the upstream base are:
-- **UEFI Secure Boot:** RefindPlus binaries as from v0.14.2.AD include the `Secure Boot Advanced Targeting (SBAT)` section required by Shim v15.3/newer for secure boot support but require users to self-sign the binaries and to self-enrol the associated certificate.
-  - > The process [outlined upstream](https://www.rodsbooks.com/refind/secureboot.html#installation) for self-signing can be followed to enable support.
+- **UEFI Secure Boot:** RefindPlus binaries as from v0.14.2.AD include the `Secure Boot Advanced Targeting (SBAT)` section required by Shim v15.3/newer for secure boot support but require users to self-sign binaries before enrolling certificates. Use [this process](https://www.rodsbooks.com/refind/secureboot.html#mok) outlined upstream.
   - > An adaptation of the process for RefindPlus is [provided here](https://github.com/RefindPlusRepo/RefindPlus/discussions/190#discussioncomment-10130431). Modify for newer releases as required.
   - > Refer to [this summation](https://forum.manjaro.org/t/howto-enable-secure-boot-with-refind/121403/6) for further insight.
 - **GZipped Loaders:** RefindPlus only provides stub support for handling GZipped loaders as this is largely only relevant for units with ARM chips.
   - > This stub support is only used for debug logging in RefindPlus and can be activated using the same `support_gzipped_loaders` setting as upstream.
-- **BtrFS Snapshots:** RefindPlus adds up to 10 `Snapshot instances` as submenu items, reachable by pressing `"F2"` or `"Insert"`, for Linux BtrFS entries.
-  - > Set the RefindPlus-specific `max_snapshots` setting to `0` to disable this feature or to a number from `1` to`99` to have that number of instances.
+- **BtrFS Snapshots:** RefindPlus adds up to 10 available `BtrFS Snapshot` instances as submenu items, reachable by pressing `"F2"` or `"Insert"`, to applicable Linux boot entry items.
+  - > Set the RefindPlus-specific `max_snapshots` setting to `0` to disable this feature or to a number from `1` to `99` for up to that number of available instances.
 - **Screenshots:** These are saved in the PNG format with a significantly smaller file size.
   - > Additionally, the file naming is different and files are always saved to the same ESP as RefindPlus.
 - **UI Flags:** RefindPlus requires that any desired previously set `hideui` setting options are explicitly defined in supplementary/theme configuration files; as whenever the token is found in such files, the token setting is reset by RefindPlus to the specified option(s). The upstream implementation effectively adds new settings to any previously existing ones for this config token instead.
   - > RefindPlus maintains consistency with how other config tokens are handled.
 - **UI Scaling:** WQHD monitors are correctly determined not to be HiDPI monitors and UI elements are not scaled up on such monitors when the RefindPlus-specific `scale_ui` setting is set to automatically detect the screen resolution. RefindPlus also scales UI elements down when low resolution screens (less than 1025px on the longest edge) are detected.
   - > Additionally, UI elements on extremely high resolution screens (greater than 5999px on the longest edge) receive a `4X scaling` as opposed to the `2X scaling` applied for standard HiDPI screens.
-- **Loader Icons:** RefindPlus prefers `os_windows`/`boot_windows` icon files, if present, over `os_win`/`boot_win` files (and `win8` variants). Separately, RefindPlus prefers generic OS icons over custom icons by default (improves load speed). The upstream icon search implementation only loads a generic OS icons after a custom icon search has returned empty.
+- **Loader Icons:** RefindPlus prefers `os_windows`/`boot_windows` icon files, if present, over `os_win`/`boot_win` files (and `win8` variants). Separately, RefindPlus prefers generic OS icons over custom icons by default (improves load speed). The upstream icon search implementation only loads a generic OS icon after a custom icon search has returned empty.
   - > Activate the RefindPlus-specific `decline_help_icon` setting to keep the upstream implementation.
 - **GOP OptionROM Provision:** RefindPlus attempts to ensure that GOP is available, to permit modern GPUs on EFI 1.x units, by amending the `UEFI System Table` and reloading the GOP OptionROM. This is via an inbuilt `ReloadGOP` feature.
   - > Activate the RefindPlus-specific `disable_reload_gop` setting to switch this feature off.

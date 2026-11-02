@@ -31,6 +31,7 @@
 #    The 4.0GB limit is attempted for 'Modes-2to9-with-badram_tag_wide'.
 #    Individual address regions greater than the size limit are ignored.
 #
+#
 # Inactive When Commented Out (No Addresses Flagged - Except Auto Scan)
 #
 #badram_tag_list 0xKLM:0xQPR,0xSUV:0xTXY
@@ -85,6 +86,7 @@
 #    The cached data can be cleared by running the 'CleanNvram' tool to allow rescans.
 #    Alternatively, this token can be temporarily set to '-1' to clear the saved cache.
 #
+#
 # Defaults to '0' When Commented Out (Does Not Tag Bad RAM)
 #
 #badram_tag_mode 4
@@ -99,6 +101,7 @@
 #    0  - Always Try 'Mode 1' First Before Running Modes 2 to 9: OFF
 #    1  - Always Try 'Mode 1' First Before Running Modes 2 to 9:  ON (Default)
 #
+#
 # Active When Commented Out (Optimises Marking Modes 2 to 9)
 #
 #badram_tag_wide 0
@@ -107,6 +110,7 @@
 # are shown. When this option is active, RefindPlus
 # will pause for nine (9) seconds when on-screen notices
 # are shown, and then proceed as if a key has been pressed.
+#
 #
 # Inactive When Commented Out (Does Not Proceed Automatically)
 # NB: This token is temporarily activated by certain notices.
@@ -129,6 +133,7 @@
 # 3. That token must therefore contain values to both 'Enable' and 'Disable' CSR.
 # 4. This token is essentially disabled whenever 'csr_values' is not active/set.
 #
+#
 # Inactive When Commented Out (Takes No Action on SIP and/or SSV)
 #
 #csr_dynamic 1
@@ -141,6 +146,7 @@
 # Mac models supporting macOS v10.15 (Catalina) are deemed to be obsolete by Apple.
 # When this token is set, RefindPlus will remove this bit from the saved CSR bits
 # when booting into macOS, similar to the process done by macOS v11.x and later.
+#
 #
 # Inactive When Commented Out (Takes No Action on SIP/SSV Settings)
 #
@@ -155,6 +161,7 @@
 # Icons placed in bootloader directories are skipped when "HelpIcon" is active;
 # except ".VolumeXYZ" images when the "hidden_icons_prefer" setting is active.
 #
+#
 # The "HelpIcon" Feature Is Active When Commented Out
 #
 #decline_help_icon
@@ -165,8 +172,10 @@
 # currently 6400 x 4000. Separately, the feature allows forcing non-standard
 # or otherwise unsupported screen resolutions; which can help overcome issues
 # where the RefindPlus screen is not displayed (Typically due to EDID issues).
+#
 # NB: The forced screen resolution feature typically requires an ultimate boot
 # into operating systems that support the graphics setup for proper operation.
+#
 #
 # The "HelpSize" Feature Is Active When Commented Out
 #
@@ -183,6 +192,7 @@
 # title banners and complementary colours are always used for text when using the
 # default RefindPlus title banner, as this always has a single solid colour.
 #
+#
 # The "HelpText" Feature Is Active When Commented Out
 #
 #decline_help_text
@@ -194,6 +204,7 @@
 # As installed as drivers, such tools typically allow screenshots
 # from external screens that the inbuilt feature does not cover.
 #
+#
 # Inactive When Commented Out (Does Not Decouple the F10 Key)
 #
 #decouple_key_f10
@@ -204,7 +215,9 @@
 # macOS version which ensures that any changes made to APFS drivers for each specific
 # macOS version are accommodated, compared to using one driver no matter what specific
 # macOS version is being loaded. This default is deactivated whenever this token is set.
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # APFS Filesystem Capability Is Provided (If Required) via "SupplyAPFS" When Commented Out
 #
@@ -225,6 +238,7 @@
 # names to alphanumeric characters. Dashes, underscores and/or spaces can
 # be used in combination with alphanumeric characters without issue.
 #
+#
 # APFS Partition Synchronisation Is Provided (If Required) When Commented Out
 #
 #disable_apfs_sync
@@ -237,6 +251,7 @@
 # "persist_boot_args" is also set, and that this boot argument
 # will remain active until it is explicitly cleared, even
 # if this setting is subsequently deactivated.
+#
 #
 # Inactive When Commented Out (Does Not Stop AMFI Checks)
 #
@@ -251,6 +266,7 @@
 # boot argument will remain active until it is explicitly cleared, even if
 # this setting is subsequently deactivated.
 #
+#
 # Inactive When Commented Out (Does Not Stop macOS Compatibility Checks)
 #
 #disable_check_compat
@@ -261,6 +277,7 @@
 #
 # NOTES:
 # 1. See 'disable_exitlogo_image' and 'disable_exitlogo_scale'
+#
 #
 # Exit Logo Images Are Cleared, After Being Shown, When Commented Out
 #
@@ -285,6 +302,10 @@
 # 1. The 'ALL' option takes precedence over others apart from 'OFF'
 # 2. The 'OFF' option takes precedence over every other setting
 # 3. See 'disable_exitlogo_clear' and 'disable_exitlogo_scale'
+# 4. Set 'boot_XYZ' files with resolutions of 256px or more
+#    The 'boot_XYZ' files are the primary target sources
+#    The 'os_XYZ' files only serve as fallback options
+#
 #
 # Exit Logo Images Are Shown, If Applicable, When Commented Out
 #
@@ -297,6 +318,7 @@
 # NOTES:
 # 1. See 'disable_exitlogo_image' and 'disable_exitlogo_clear'
 #
+#
 # Exit Logo Images Are Scaled, If Shown, When Commented Out
 #
 #disable_exitlogo_scale
@@ -305,6 +327,7 @@
 # While this was accurate for some time, some later Macs are UEFI Class 3
 # devices that do not support legacy BIOS boot. The "LegacySync" feature
 # attempts to categorise Intel Macs to allow/disallow legacy BIOS boot.
+#
 #
 # The "LegacySync" Feature Is Active When Commented Out
 #
@@ -319,6 +342,7 @@
 # is triggered which will remain active until explicitly cleared,
 # even if this setting is subsequently deactivated.
 #
+#
 # Inactive When Commented Out (Does Not Stop macOS Panic Log Writes to nvRAM)
 #
 #disable_nvram_paniclog
@@ -328,7 +352,9 @@
 # UEFI Windows Secure Boot (certificates) to the nvRAM on Legacy Macs as these may
 # result in an overrun that will damage the BootROM (also stored on the nvRAM) and
 # results in an inability to boot. This token is only activated on Apple firmware.
+#
 # NB: Auto disabled whenever RefindPlus is loaded from OpenCore on Apple firmware.
+#
 #
 # The "NvramProtect" Feature Is Active When Commented Out
 #
@@ -336,7 +362,9 @@
 
 # Disables adding the GOP protocol to UGA, done by default when absent, that
 # allow some graphics displays on newer operating systems with legacy GPUs
+#
 # NB: This functionality is only available on TianoCore Builds.
+#
 #
 # GOP Is Added to UGA (If Required) When Commented Out
 #
@@ -356,6 +384,7 @@
 # is longer required to allow GPU activation except when the related
 # "supply_uefi" setting is activate, as this overrides this revert.
 #
+#
 # GPU OptionROMs Are Reinstalled (If Required) When Commented Out
 #
 #disable_reload_gop
@@ -369,6 +398,7 @@
 # while not being required on some types of firmware. Hence, an option
 # to skip the process *MAY* be desirable on affected types of firmware.
 #
+#
 # Inactive When Commented Out (Does Not Stop Rescans for DXE Drivers)
 #
 #disable_rescan_dxe
@@ -376,7 +406,9 @@
 # Replace the Apple FramebufferInfo protocol with a builtin version. By default,
 # RefindPlus is configured to always install the Apple FramebufferInfo protocol
 # when missing on Macs. This feature can be disabled by activating this token.
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # Apple FramebufferInfo Protocol Is Provided (If Required) When Commented Out
 #
@@ -392,7 +424,9 @@
 # GPUs with system firmware support. This option replaces GOP on the
 # Console Out Handle with one from a GFX Handle on such models when
 # running capable GPUs that are not supported by system firmware.
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # The "SetConsoleGOP" Feature Is Active When Commented Out
 #
@@ -400,6 +434,7 @@
 
 # Scans of ESPs for kernels and loaders are limited to the
 # ESP containing RefindPlus whenever this option is active.
+#
 #
 # Scans of all ESPs are allowed when commented out
 #
@@ -416,6 +451,7 @@
 # on may significantly increase boot times and that enabling TRIM on
 # non-Apple SSDs may affect the integrity of data on such SSDs.
 #
+#
 # Inactive When Commented Out (Does Not Forcefully Set TRIM)
 #
 #force_trim
@@ -423,6 +459,7 @@
 # RefindPlus defaults to only scanning for ".VolumeIcon" icons on "internal"
 # volumes. However, when this token is active (and the "hidden_icons_ignore"
 # token is not) RefindPlus will also scan "external" volumes for these icons.
+#
 #
 #hidden_icons_external
 
@@ -438,6 +475,7 @@
 # 1. This token overrides the "hidden_icons_external" and
 #    the "hidden_icons_prefer" tokens when it is active.
 #
+#
 # Scans for ".VolumeIcon" Icons When Commented Out
 #
 #hidden_icons_ignore
@@ -452,6 +490,7 @@
 #
 # NB: ".VolumeIcon" icon files can be in any supported format ...
 # ICNS (*.icns), BMP (*.bmp), PNG (*.png), or JPG (*.jpg/jpeg).
+#
 #
 # Does Not Prioritise ".VolumeIcon" Images When Commented Out
 #
@@ -504,7 +543,9 @@
 # This token increases this derived base time threshold to a new time threshold
 # below which attempts to run loaders will not be permitted in order to avoid
 # RefindPlus spontaneously starting up default selections when it is loaded.
+#
 # NB: This feature does not operate on Apple firmware even when set here.
+#
 #
 # Inactive When Commented Out (Does Not Increase Base Threshold Interval)
 #
@@ -512,8 +553,10 @@
 
 # When this option is activate, the RefindPlus "NvramProtect" feature will be
 # extended, if set, to cover booting into macOS and "unknown" UEFI files.
+#
 # NB: This feature is disabled when RefindPlus is loaded from OpenCore.
 #     This setting is only active, if set, on Apple firmware.
+#
 #
 # Inactive When Commented Out (Does Not Extend NvramProtect)
 #
@@ -529,6 +572,7 @@
 # that it is disabled when it is set to a value lower than 1024 bytes.
 # Additionally, this option is only activated on direct macOS boots.
 #
+#
 # Inactive When Commented Out (Does Not Filter nvRAM Writes by Size)
 #
 #nvram_variable_limit 2048
@@ -536,7 +580,9 @@
 # Adds a UGA Protocol to GOP, when absent, to allow RefindPlus graphics
 # display when using modern GPUs on units with only EFIBoot capability
 # or with "EFIBoot-Only" operating systems like macOS v10.4 (Tiger).
+#
 # NB: This functionality is only available on TianoCore Builds.
+#
 #
 # Inactive When Commented Out (Does Not Add UGA to GOP)
 #
@@ -551,7 +597,9 @@
 #   - set_boot_args
 # This token can be activated in cases where writing
 # such to the nvRAM flash chip is preferred instead.
+#
 # NB: This is only relevant for booting into macOS.
+#
 #
 # Inactive When Commented Out (Boot Args Are Not Persisted)
 #
@@ -562,6 +610,7 @@
 # (UGA) when this is available and GOP is not. When this setting is active,
 # it will instead always use UGA when available and will not consider GOP.
 # This may also improve RefindPlus loading speed on legacy UGA-only GPUs.
+#
 #
 # Inactive When Commented Out (Does Not Prefer UGA over GOP)
 #
@@ -575,8 +624,10 @@
 # or hang in RefindPlus (as firmware supplied drivers may not be compatible).
 # When this token is active, RefindPlus disconnects such firmware supplied
 # drivers to accommodate otherwise disabled user supplied alternatives.
+#
 # NB: This token is always disabled when Apple firmware is detected.
 #     This functionality is only available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Handle Such Partitions)
 #
@@ -588,7 +639,9 @@
 # this should only be used when there is an obvious benefit as it
 # may result in glitches in the pre-boot configuration screen or
 # slow scrolling response on booting into the operating system.
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Use the Built-In GOP)
 #
@@ -603,7 +656,9 @@
 # Note that this option is forced on whenever text output is required,
 # such as when running uEFI Shell or whenever RefindPlus is changed to
 # text mode as part of its operations (mainly to show error messages).
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Use a Custom Text Renderer)
 #
@@ -620,6 +675,7 @@
 #   0    - Scale UI elements, or not, based on screen resolution (Default)
 #  -1    - Always scale UI elements down
 #
+#
 # Scales UI Elements Based on Screen Resolution When Commented Out
 #
 #scale_ui 1
@@ -630,6 +686,7 @@
 # or an Apple LightGrey colour when that token is not set. This can
 # be overridden by providing three (3) values, between 0 and 255,
 # representing the desired RGB value for the background colour.
+#
 #
 # Uses the Default Colour Selection Process When Commented Out
 #
@@ -644,6 +701,7 @@
 # will remain active until it is explicitly cleared, even if this
 # setting is subsequently deactivated.
 #
+#
 # Inactive When Commented Out or Set to "-none" (Does Not Change Boot Args)
 #
 #set_boot_args "-v"
@@ -651,8 +709,10 @@
 # Supply NVME driver. When this token is set, RefindPlus will
 # use its 'SupplyNVME' feature to load a built in NvmExpressDxe
 # driver to supply support when this is possible but unavailable.
+#
 # NB: This functionality is disabled if UEFI SecureBoot is detected.
 #     This functionality is only available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Supply NVMe Support)
 #
@@ -663,7 +723,9 @@
 # available. It additionally modifies the EFI Revision value to UEFI 2.3.
 # This may allow running UEFI 2.x tools and drivers on EFI 1.x units such
 # as Legacy Macs as several such tools only require CreateEventEx to work.
+#
 # NB: This functionality is only available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Emulate UEFI 2.x)
 #
@@ -690,6 +752,7 @@
 # 3. Option '2' is as '3' when 'transient_boot' is active
 # 4. Qualifying boots are macOS, OpenCore or Clover boots
 #
+#
 # Inactive When Commented Out (Does Not Sync nvRAM)
 #
 #sync_nvram 1
@@ -714,6 +777,7 @@
 # 2. The 'none' option takes precedence over every other setting
 # 3. The 'DirectBoot' feature is disabled by this token
 #
+#
 # Inactive When Commented Out or Set to 'none' (Does Not Trigger Reboots)
 #
 #sync_trust macos verify
@@ -727,6 +791,7 @@
 # writes are not required to start with and when the "transient_boot" setting is
 # activated, RefindPlus will not store the "PreviousBoot" variable anywhere.
 #
+#
 # Always Saves the "PreviousBoot" Variable When Commented Out
 #
 #transient_boot
@@ -736,7 +801,9 @@
 # sometimes worked and sometimes did not. The proper implementation process
 # however is to first locate every instance and select one that supports
 # the English language. This has now been implemented.
+#
 # NB: This functionality is only fully available on TianoCore builds.
+#
 #
 # Inactive When Commented Out (Does Not Look for Unicode English Support)
 #
@@ -787,6 +854,7 @@
 # values. Hence, three (3) or more values can be defined
 # which will be rotated in turn in a loop by CSR Rotate.
 #
+#
 # Inactive When Commented Out (CSR Values Cannot Be Set)
 #
 #csr_values 10,77
@@ -812,6 +880,7 @@
 # This option is mutually exclusive with the "enable_mouse" feature and
 # the "enable_touch" option will take precedence when both are active.
 #
+#
 # Inactive When Commented Out (Does Not Enable Touch Screen Support)
 #
 #enable_touch
@@ -830,6 +899,7 @@
 #
 # Refer to 'dont_scan_volumes' entry
 # for options on identifying volumes.
+#
 #
 # Inactive When Commented Out (Symlinks Never Followed)
 #
@@ -853,6 +923,7 @@
 # 1. The 'all' option takes precedence over others apart from 'none'
 # 2. The 'none' option takes precedence over every other setting
 #
+#
 # Inactive When Commented Out or Set to 'none' (Does Not Hide UI Elements)
 #
 #hideui label badges
@@ -865,6 +936,7 @@
 # that Levels 0 and 1 are the available log levels for typical users. This option is
 # only active when running DEBUG builds and the logging process, particularly higher
 # levels, can noticeably slow RefindPlus operation and time must be given as needed.
+#
 #
 # The Native Format Is Used When Commented Out (DEBUG and NOOPT Builds Only)
 # Logging *IS NOT* Active on RELEASE Builds
@@ -880,7 +952,9 @@
 # On EFI 1.x systems, such as legacy Macs, setting incorrect modes
 # may silently fail. On both types of systems, setting modes that
 # are unavailable results in the default resolution being used.
+#
 # NB: A forcefully set mode is considered an available mode.
+#
 #
 # Uses the Maximum Screen Resolution When Commented Out
 #
@@ -905,6 +979,7 @@
 # 2. The netboot option is experimental.
 #    It requires the "ipxe.efi" and "ipxe_discover.efi" files.
 #
+#
 # On UEFI PC, the default setting is internal,external,optical,manual
 # On Mac, the default is internal,hdbios,external,biosexternal,optical,cdbios,manual
 #
@@ -914,6 +989,7 @@
 # number of seconds without input. Screen is restored on keypresses
 # (Excluding keys such as "Shift", "Control", "Alt", and "Option").
 # "-1" causes RefindPlus to start up with the screensaver active.
+#
 #
 # Inactive When Commented Out (Screensaver Is Disabled)
 #
@@ -956,6 +1032,7 @@
 #  fwupdate         - A tag to update the firmware; launches the fwupx64.efi (or similar) program
 #  netboot          - Launch the ipxe.efi tool for network (PXE) booting
 #
+#
 # Activates Default Options When Commented Out
 # Default Options Are: about,hidden_tags,csr_rotate,bootorder,shutdown
 # NB: Setting "showtools" alone, without any options, disables all tools
@@ -982,6 +1059,7 @@
 # is pressed instead, the 'DirectBoot' feature is overridden and the
 # main menu screen displayed as normal. If a shortcut key cannot be
 # matched to a valid shortcut, the main menu is displayed instead.
+#
 #
 # Inactive When Commented Out or Set to "0" (Timeout Is Disabled)
 #
@@ -1013,6 +1091,7 @@
 # 1. The 'everything' option takes precedence over others apart from 'none'
 # 2. The 'none' option takes precedence over every other setting
 #
+#
 # Defaults to 'osx' When Commented Out
 #
 #use_graphics_for osx linux windows
@@ -1029,6 +1108,7 @@
 # option only applies to RefindPlus variables such as the PreviousBoot, HiddenTags,
 # HiddenTools, and HiddenLegacy variables and does not apply to any variables from
 # other processes/libraries (These are always written to the motherboard's nvRAM).
+#
 #
 # Stores RefindPlus-Specific Variables on the Filesystem When Commented Out
 #
@@ -1054,6 +1134,7 @@
 # to scan the "somedir" directory only on the filesystem named "myvol". If
 # a specified directory does not exist, it is ignored (no error message).
 #
+#
 # Always Scans "boot" and "@\boot" Whether Commented Out or Not
 #
 #also_scan_dirs ESP2:EFI/linux/kernels
@@ -1063,6 +1144,7 @@
 # alone or a volume identifier plus pathname. The default is to scan no
 # extra directories, beyond EFI/tools, EFI/BOOT/tools and any directory
 # in which a uEFI loader is found.
+#
 #
 #also_scan_tool_dirs EFI/memtest,ESP2:/EFI/tools/memtest86
 
@@ -1075,6 +1157,7 @@
 # poor choices for this purpose. Some PNG and JPEG features are not supported
 # and some file formats, such as "progressive" JPEG files, are not supported.
 #
+#
 # Uses the Default Title Banner When Commented Out
 #
 #banner hostname.bmp
@@ -1084,6 +1167,7 @@
 # How to handle banners that are not the same size as the screen size:
 #     noscale     - Crop if too big or show with border if too small
 #     fillscreen  - Fill the screen
+#
 #
 # Uses "noscale" When Commented Out
 #
@@ -1109,6 +1193,7 @@
 # set followed by one or more that include times to set different
 # defaults for different times of day.
 #
+#
 # Defaults to "+" When Commented Out (Selects the Last Run Loader)
 #
 #default_selection 1
@@ -1130,6 +1215,7 @@
 # being scanned on the "myvol" volume but not on other volumes.
 #
 # The default is the "SelfDir" path.
+#
 #
 # Uses Default Setting When Commented Out
 #
@@ -1154,6 +1240,7 @@
 # TextMode.efi,ebounce.efi,GraphicsConsole.efi,bootmgr.efi,shim.efi,fb.efi,
 # shim{arch}.efi,fb{arch}.efi" ("{arch}" is the architecture, such as "x64").
 #
+#
 # Uses Default Setting When Commented Out
 #
 #dont_scan_files shim.efi,MokManager.efi
@@ -1167,6 +1254,7 @@
 # Specifying "shell" will override the automatic inclusion of
 # built-in uEFI shells.
 #
+#
 # Has an Empty List (Nothing Is Excluded) When Commented Out
 #
 #dont_scan_firmware HARDDISK,shell,"Removable Device"
@@ -1178,6 +1266,7 @@
 # filename, a full pathname, or a volume identifier (filesystem
 # label, partition name, or partition GUID) along with a full
 # pathname can be specified.
+#
 #
 # Has an Empty List (Nothing Is Excluded) When Commented Out
 #
@@ -1197,6 +1286,7 @@
 #
 # The default setting is "LRS_ESP"
 #
+#
 # Uses Default Setting When Commented Out
 #
 #dont_scan_volumes "Boot OS X"
@@ -1209,6 +1299,7 @@
 # !!!*** ONLY SET ON INTEL CPUS WITH VMX SUPPORT ***!!!
 # Refer to the link below for more on this subject:
 # www.thomas-krenn.com/en/wiki/Activating_the_Intel_VT_Virtualization_Feature
+#
 #
 # Inactive When Commented Out (Does Not Try to Enable and Lock the MSR)
 #
@@ -1228,6 +1319,7 @@
 # (say, the kernel filename includes "linux" but the initrd filename does
 # not), set the option to an empty string (or comment out) to disable.
 #
+#
 # Inactive When Commented Out (No Extra Version Strings Are Used)
 #
 #extra_kernel_version_strings linux-lts,linux
@@ -1242,6 +1334,7 @@
 #       0    - Combine Linux kernel entries: OFF
 #       1    - Combine Linux kernel entries: ON
 #
+#
 # Active When Commented Out (Combines Linux Kernel Entries)
 #
 #fold_linux_kernels 0
@@ -1253,6 +1346,7 @@
 # of characters outside this range (96 glyphs in total). Only monospaced
 # fonts are supported. Fonts may be of any size, although large fonts can
 # produce display irregularities.
+#
 #
 # Uses the Built-In Font, Luxi Mono Regular 12 Point, When Commented Out
 #
@@ -1269,6 +1363,7 @@
 # BMP and JPEG  implementations do not support transparency,
 # which is highly desirable in icons.
 #
+#
 # Loads Icons from the "icons" Folder When Commented Out
 #
 #icons_dir myicons
@@ -1279,6 +1374,7 @@
 # are also EFI boot loaders. Default is "vmlinuz,bzImage,kernel",
 # except on ARM64, where it is "vmlinuz,Image,kernel".
 #
+#
 #linux_prefixes zImage
 
 # Set the maximum number of tags that can be displayed on the screen at
@@ -1287,11 +1383,13 @@
 # to handle, it is reduced to the value that the screen can manage. If this
 # value is set to "0", it is adjusted to a number the screen can handle.
 #
+#
 # Adjusts Displayed Boot Loaders to Screen Width When Commented Out
 #
 #max_tags 0
 
 # Size of mouse pointer, in pixels, per side.
+#
 #
 # Uses a mouse size of 16 when commented out
 #
@@ -1300,6 +1398,7 @@
 # Speed of mouse tracking. Higher numbers equate to faster
 # mouse movement. This option requires "enable_mouse" to
 # be uncommented. Valid values are 1 to 32 (inclusive).
+#
 #
 # Uses a Mouse Speed of 4 When Commented Out
 #
@@ -1317,12 +1416,14 @@
 # a text mode and uncommenting the "textonly" option without specifying
 # a resolution may result in an unusable operating system display.
 #
+#
 # Uses Mode 1024 When Commented Out
 #
 #textmode 2
 
 # Use text screen mode. When enabled, this option sets the RefindPlus
 # screen mode to text mode. Graphics screen mode is used otherwise.
+#
 #
 # Uses Graphics Screen Mode When Commented Out
 #
@@ -1336,12 +1437,14 @@
 # directories with names that begin with "vmlinuz", "bzImage", or "kernel"
 # be included as loaders (even if they do not have ".efi" extensions).
 #
+#
 # Inactive When Commented Out (Only Scans for Kernels with ".efi" Extensions)
 #
 #scan_all_linux_kernels
 
 # Delay for the specified number of seconds before scanning disks.
 # This may help when disks are not detected until "ESC" is pressed.
+#
 #
 # Inactive When Commented Out (Does Not Wait Before Scanning Disks)
 #
@@ -1355,6 +1458,7 @@
 # and "drivers_{arch}" subdirectories of its installation directory
 # (NOTE: {arch} = architecture code). This option specifies other
 # *ADDITIONAL* directories to scan along with these defaults.
+#
 #
 # Inactive When Commented Out (Does Not Scan Extra Folders)
 #
@@ -1379,6 +1483,7 @@
 # Custom selection images larger these thresholds
 # will be replaced with default embedded images.
 #
+#
 # Uses Default Selection Images When Commented Out
 #
 #selection_big icons/selection-big.png
@@ -1391,6 +1496,7 @@
 # !!!*** MANY COMPUTERS WILL HANG OR REBOOT INSTEAD ***!!!
 # Macs and recent UEFI-PCs are most likely to work with this feature.
 #
+#
 # Boots the Default Selection on Timeout When Commented Out
 #
 #shutdown_after_timeout
@@ -1400,6 +1506,7 @@
 # are used for tools on the second row. Drive-type badges are 1/4 the size
 # of the big icons. Legal values are 32 and above. If the icon files do not
 # hold icons of the proper size, the icons are scaled to the specified size.
+#
 #
 # Uses 48 and 128 for Small and Big Icons Respectively When Commented Out
 #
@@ -1418,6 +1525,7 @@
 # needed, a value of "10.9" usually works, but other values may
 # also work. This option has no effect on non-Apple computers.
 #
+#
 # Inactive When Commented Out (No macOS Version Spoofing)
 #
 #spoof_osx_version 10.9
@@ -1428,12 +1536,14 @@
 # of nvRAM variables on each boot. This option has no effect on Macs
 # or when legacy BIOS boot options are not set in the 'scanfor' token.
 #
+#
 # Inactive When Commented Out (Does Not Result in a Forced Scan)
 #
 #uefi_deep_legacy_scan
 
 # Boot loaders that can launch a Windows restore or emergency system.
 # These tend to be OEM-specific.
+#
 #
 # The default setting is LRS_ESP:/EFI/Microsoft/Boot/LrsBootmgr.efi
 #
@@ -1443,6 +1553,7 @@
 # when launching Linux instances. This variable setting, when present,
 # causes SystemD to mount the ESP as '/boot' *IF* that directory
 # is empty and nothing else has been mounted there earlier.
+#
 #
 # Inactive When Commented Out (Variable Is Not Set)
 #
@@ -1468,6 +1579,7 @@
 # defined in addition to, or instead of, secondary configuration files as
 # described above. NB: Included manual configuration stanza files cannot
 # "include" tertiary, or other manual configuration stanza, files.
+#
 #
 # Inactive When Commented Out (Secondary File Is Not Loaded)
 #

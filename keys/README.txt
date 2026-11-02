@@ -65,15 +65,14 @@ The files in this directory are, in alphabetical order:
   used to sign OpenSUSE; taken from openSUSE's shim 0.7.318.81ee56d
   package.
 
-- refind.cer & refind.crt -- My own (Roderick W. Smith's) public key,
-  matched to the one used to sign refind_x64.efi and the 64-bit rEFInd
-  drivers.
+- refind.cer & refind.crt -- Roderick W. Smith's public key, matched
+  to the one used to sign refind_x64.efi and the 64-bit rEFInd drivers.
 
 - SLES-UEFI-CA-Certificate.cer & SLES-UEFI-CA-Certificate.crt -- The Public
   key for SUSE Linux Enterprise Server; taken from openSUSE's shim
   0.7.318.81ee56d package.
 
-The refind.cer and refind.crt files are my creations and are distributed
-under the terms of the BSD 2-clause license. The rest of the files are
-distributed on the assumption that doing so constitutes fair use. Certainly
-they're all easily obtained on the Internet from other sources.
+The refind.cer and refind.crt files are Roderick W. Smith's creations and are
+distributed under the terms of the BSD 2-clause license. The rest of the files
+are distributed on the assumption that doing so constitutes fair use. Certainly
+they are all easily obtained on the Internet from other sources.

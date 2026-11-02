@@ -6,6 +6,18 @@ This document describes the implementation and configuration of the memory defec
 
 The feature allows masking faulty memory regions to prevent them being used by the EFI environment or subsequent operating systems.
 
+<br>
+
+The feature may be useful to those unwilling/unable to change RAM modules with defective regions on otherwise perfectly fine units.
+
+Such units, typically with soldered-on RAM, often require expensive repair, or get discarded, due to small regions of faulty RAM.
+
+<br>
+
+The `BadRamTag` feature is analogous to the masking in the Linux kernel as well as in the OpenCore and GRUB Bootloaders.
+
+This RefindPlus functionality additionally allows the automated scanning and identification of defective RAM regions.  
+
 </div>
 
 <br><br>

@@ -1,10 +1,16 @@
+0.14.2.AG (PRE-RELEASE):
+-----------------------
+- PENDING
+
+
 0.14.2.AF (13 OCT 2026):
 -----------------------
 - Adds `BtrFS Snapshot` Support
-  * Displayed as `SubMemu` options
+  * Displayed as `SubMenu` options
   * A maximum of 99 instances can be displayed
   * Configurable via a new `max_snapshots` setting
   * Only for setups with kernel and loader on one volume
+  * Currently only applies to snapshots created by `Snapper`
 - Fixes `BadRamTag` Feature
   * The `badram_tag_wide` setting was not `'ON' by Default` as intended
   * This bug was introduced in v0.14.2.AE (Commit 973479b)

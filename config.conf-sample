@@ -285,6 +285,9 @@
 # 1. The 'ALL' option takes precedence over others apart from 'OFF'
 # 2. The 'OFF' option takes precedence over every other setting
 # 3. See 'disable_exitlogo_clear' and 'disable_exitlogo_scale'
+# 4. Set 'boot_XYZ' files with resolutions of 256px or more
+#    The 'boot_XYZ' files are the primary target sources
+#    The 'os_XYZ' files only serve as fallback options
 #
 # Exit Logo Images Are Shown, If Applicable, When Commented Out
 #
