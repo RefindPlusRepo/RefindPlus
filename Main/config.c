@@ -359,7 +359,7 @@ VOID HandleSignedInt (
 // Parse a tool row offset without overflowing on large decimal input.
 // Invalid values leave the previous setting unchanged.
 static
-VOID HandleToolRowTune (
+VOID HandleRowToolsTune (
     IN CHAR16 *Token
 ) {
     BOOLEAN Negative;
@@ -387,9 +387,9 @@ VOID HandleToolRowTune (
             ? Limit : Magnitude * 10 + Digit;
     }
 
-    GlobalConfig.ToolRowTune = (Negative)
+    GlobalConfig.RowToolsTune = (Negative)
         ? -(INTN) Magnitude : (INTN) Magnitude;
-} // static VOID HandleToolRowTune()
+} // static VOID HandleRowToolsTune()
 
 // Handle a parameter with a single integer argument (unsigned)
 static
@@ -4529,7 +4529,10 @@ VOID ReadConfig (
         }
         else if (
             TokenCount == 2 &&
-            MyStriCmp (TokenList[0], L"icon_row_move")
+            (
+                MyStriCmp (TokenList[0], L"row_icons_move") ||
+                MyStriCmp (TokenList[0], L"icon_row_move")
+            )
         ) {
             #if REFIT_DEBUG > 0
             if (!OuterLoop) {
@@ -4542,12 +4545,15 @@ VOID ReadConfig (
             // DA-TAG: Signed integer as *MAY* have negative value input
             HandleSignedInt (
                 TokenList, TokenCount,
-                &(GlobalConfig.IconRowMove)
+                &(GlobalConfig.RowIconsMove)
             );
         }
         else if (
             TokenCount == 2 &&
-            MyStriCmp (TokenList[0], L"icon_row_tune")
+            (
+                MyStriCmp (TokenList[0], L"row_icons_tune") ||
+                MyStriCmp (TokenList[0], L"icon_row_tune")
+            )
         ) {
             #if REFIT_DEBUG > 0
             if (!OuterLoop) {
@@ -4560,15 +4566,15 @@ VOID ReadConfig (
             // DA-TAG: Signed integer as *MAY* have negative value input
             HandleSignedInt (
                 TokenList, TokenCount,
-                &(GlobalConfig.IconRowTune)
+                &(GlobalConfig.RowIconsTune)
             );
 
             // Store as opposite number
-            GlobalConfig.IconRowTune *= -1;
+            GlobalConfig.RowIconsTune *= -1;
         }
         else if (
             TokenCount == 2 &&
-            MyStriCmp (TokenList[0], L"tool_row_tune")
+            MyStriCmp (TokenList[0], L"row_tools_tune")
         ) {
             #if REFIT_DEBUG > 0
             if (!OuterLoop) {
@@ -4578,7 +4584,7 @@ VOID ReadConfig (
             }
             #endif
 
-            HandleToolRowTune (TokenList[1]);
+            HandleRowToolsTune (TokenList[1]);
         }
         else if (
             TokenCount == 2 &&

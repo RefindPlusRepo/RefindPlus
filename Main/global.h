@@ -575,9 +575,9 @@ typedef struct {
     INTN                        ScaleUI;
     INTN                        LogLevel;
     INTN                        DynamicCSR;
-    INTN                        IconRowMove;
-    INTN                        IconRowTune;
-    INTN                        ToolRowTune;
+    INTN                        RowIconsMove;
+    INTN                        RowIconsTune;
+    INTN                        RowToolsTune;
     INTN                        BadRamTagType;
     INTN                        ScreenR;
     INTN                        ScreenG;

@@ -362,7 +362,7 @@ VOID UpdateScroll (
     // Follow the displayed row order when tuning moves tools above loaders.
     // Compare centres so overlapping rows have a consistent direction.
     if (State->ScrollMode == SCROLL_MODE_ICONS &&
-        GlobalConfig.ToolRowTune != 0 &&
+        GlobalConfig.RowToolsTune != 0 &&
         IconRowCount != 0 && ToolRowCount != 0 &&
         ToolRowPosY + TileSizes[1] / 2 < IconRowPosY + TileSizes[0] / 2
     ) {
@@ -1167,7 +1167,7 @@ VOID PaintSelection (
 
     // Redraw both rows when tuned tools overlap loaders. Repainting a single
     // loader would otherwise erase tools drawn over its selection background.
-    if (GlobalConfig.ToolRowTune != 0 && ToolRowCount != 0 &&
+    if (GlobalConfig.RowToolsTune != 0 && ToolRowCount != 0 &&
         row1PosY < row0PosY + TileSizes[0] &&
         row0PosY < row1PosY + TileSizes[1]
     ) {
@@ -2001,7 +2001,7 @@ UINTN ComputeToolRowPosY (
     INTN MaxPosition;
 
 
-    if (GlobalConfig.ToolRowTune == 0 || ToolRowCount == 0) {
+    if (GlobalConfig.RowToolsTune == 0 || ToolRowCount == 0) {
         return DefaultPosY;
     }
 
@@ -2018,7 +2018,7 @@ UINTN ComputeToolRowPosY (
 
     // Bound the operands before signed subtraction, including extreme input.
     Position = (DefaultPosY > ScreenH) ? (INTN) ScreenH : (INTN) DefaultPosY;
-    Offset = GlobalConfig.ToolRowTune;
+    Offset = GlobalConfig.RowToolsTune;
     if (Offset > (INTN) ScreenH) {
         Offset = (INTN) ScreenH;
     }
@@ -3496,12 +3496,12 @@ UINTN ComputeRow0PosY (
 
     // Amend 'IconRowTweak' if 'ApplyOffset' is Active
     if (ApplyOffset) {
-        if (GlobalConfig.IconRowMove != 0) {
+        if (GlobalConfig.RowIconsMove != 0) {
             // Set positive value
             // Moves rows to lower third of screen
             IconRowTweak = (ScreenH / 4);
 
-            if (GlobalConfig.IconRowMove > 0) {
+            if (GlobalConfig.RowIconsMove > 0) {
                 // Set Negative Value
                 // Moves rows to upper third of screen
                 IconRowTweak *= -1;
@@ -3520,8 +3520,8 @@ UINTN ComputeRow0PosY (
     // Amend Row Position if 'ApplyOffset' is Active
     if (ApplyOffset) {
         // Amend Row Position
-        // Adds 'icon_row_tune' value (which may be zero)
-        Row0PosY += GlobalConfig.IconRowTune;
+        // Adds 'row_icons_tune' value (which may be zero)
+        Row0PosY += GlobalConfig.RowIconsTune;
     }
 
     // Return Row Position
@@ -3676,7 +3676,7 @@ UINTN FindMainMenuItem (
     row1PosY     =   ToolRowPosY;
 
     // Tuned tools are painted over loaders if the rows overlap.
-    if (GlobalConfig.ToolRowTune != 0 && ToolRowCount != 0 &&
+    if (GlobalConfig.RowToolsTune != 0 && ToolRowCount != 0 &&
         PosY >= row1PosY && PosY <= row1PosY + TileSizes[1] &&
         PosX >= row1PosX && PosX < ScreenW - row1PosX
     ) {
