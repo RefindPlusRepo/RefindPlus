@@ -135,8 +135,6 @@ force_trim             |Allows forcing `TRIM` on Third-Party SSDs on Macs
 hidden_icons_external  |Allows scanning for `.VolumeIcon` icons on external volumes
 hidden_icons_ignore    |Disables scanning for `.VolumeIcon` image icons if not required
 hidden_icons_prefer    |Prioritises `.VolumeIcon` and `.VolumeBadge` image icons when available
-icon_row_move          |Repositions the main screen icon rows (vertically)
-icon_row_tune          |Fine tunes the resulting `icon_row_move` outcome
 max_snapshots          |Allows configuring `BtrFS Snapshots` made available for booting
 mitigate_primed_buffer |Allows enhanced intervention to handle apparent primed keystroke buffers
 nvram_protect_ex       |Extends `NvramProtect`, if set, to Mac OS and `unknown` UEFI boots
@@ -147,6 +145,9 @@ prefer_uga             |Prefers UGA use (when available) regardless of GOP avail
 ransom_drives          |Frees partitions locked by how certain firmware load inbuilt drivers
 renderer_direct_gop    |Provides a potentially improved GOP instance for certain GPUs
 renderer_text          |Provides a text renderer for text output when otherwise unavailable
+row_icons_move         |Repositions the main screen icon rows (vertically)
+row_icons_tune         |Fine tunes the resulting `row_icons_move` outcome
+row_tools_tune         |Additionally fine tunes the resulting `row_icons_tune` outcome (for tools)
 scale_ui               |Provides control of UI element scaling
 screen_rgb             |Allows setting arbitrary screen background colours
 set_boot_args          |Allows setting arbitrary Mac OS boot arguments

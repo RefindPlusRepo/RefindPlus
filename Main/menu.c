@@ -1966,6 +1966,39 @@ VOID FreeLoaderEntry (
     LOG_SEP(L"X");
 } // static VOID FreeLoaderEntry()
 
+// Tune the tools independently, retaining the original layout for zero.
+static
+UINTN ComputeToolRowPosY (
+    IN UINTN DefaultPosY
+) {
+    UINTN Available;
+    INTN MaxPosition;
+
+
+    if (GlobalConfig.RowToolsTune >= 0 || ToolRowCount == 0) {
+        return DefaultPosY;
+    }
+
+    // Keep the selection tile, label and timeout above the fixed hints.
+    // Reserve text space even with hidden labels: painting clears that line.
+    MaxPosition = (INTN) ScreenH - (INTN) TileSizes[1] - TILE_YSPACING
+        - 2 * (INTN) TextLineHeight();
+    if (!(GlobalConfig.HideUIFlags & HIDEUI_FLAG_HINTS)) {
+        MaxPosition -= 3 * (INTN) egGetFontHeight();
+    }
+    // On cramped screens preserve the original row separation.
+    if (MaxPosition <= 0 || DefaultPosY >= (UINTN) MaxPosition) {
+        return DefaultPosY;
+    }
+
+    Available = (UINTN) MaxPosition - DefaultPosY;
+    if (GlobalConfig.RowToolsTune <= -(INTN) Available) {
+        return (UINTN) MaxPosition;
+    }
+
+    return DefaultPosY + (UINTN) -GlobalConfig.RowToolsTune;
+} // static UINTN ComputeToolRowPosY()
+
 static
 VOID GetStateInfo (
     IN REFIT_MENU_SCREEN *Screen,
@@ -1993,7 +2026,9 @@ VOID GetStateInfo (
     IconRowPosX = (ScreenW + TILE_XSPACING - (TileSizes[0] + TILE_XSPACING) * IconRowCount) >> 1;
     IconRowPosY = ComputeRow0PosY (TRUE);
     ToolRowPosX = (ScreenW + TILE_XSPACING - (TileSizes[1] + TILE_XSPACING) * ToolRowCount) >> 1;
-    ToolRowPosY = IconRowPosY + TileSizes[0] + TILE_YSPACING;
+    ToolRowPosY = ComputeToolRowPosY (
+        IconRowPosY + TileSizes[0] + TILE_YSPACING
+    );
 
 } // static VOID GetStateInfo()
 
@@ -3424,12 +3459,12 @@ UINTN ComputeRow0PosY (
 
     // Amend 'IconRowTweak' if 'ApplyOffset' is Active
     if (ApplyOffset) {
-        if (GlobalConfig.IconRowMove != 0) {
+        if (GlobalConfig.RowIconsMove != 0) {
             // Set positive value
             // Moves rows to lower third of screen
             IconRowTweak = (ScreenH / 4);
 
-            if (GlobalConfig.IconRowMove > 0) {
+            if (GlobalConfig.RowIconsMove > 0) {
                 // Set Negative Value
                 // Moves rows to upper third of screen
                 IconRowTweak *= -1;
@@ -3448,8 +3483,8 @@ UINTN ComputeRow0PosY (
     // Amend Row Position if 'ApplyOffset' is Active
     if (ApplyOffset) {
         // Amend Row Position
-        // Adds 'icon_row_tune' value (which may be zero)
-        Row0PosY += GlobalConfig.IconRowTune;
+        // Adds 'row_icons_tune' value (which may be zero)
+        Row0PosY += GlobalConfig.RowIconsTune;
     }
 
     // Return Row Position

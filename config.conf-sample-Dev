@@ -496,29 +496,6 @@
 #
 #hidden_icons_prefer
 
-# Offset the OS icon row position on the main screen vertically from the default.
-# This token accepts positive/negative indicative flags that indicate the offset
-# position of OS icons on the main RefindPlus screen. Such offsets may be useful
-# when the default position of the icon row clashes with parts of custom banners.
-#
-# The applicable flags are:
-#   1    - Move icon rows to the upper third of the screen
-#   0    - Maintain default icon row position (mid screen)
-#  -1    - Move icon rows to the lower third of the screen
-#
-# Defaults to Zero When Commented Out (Does Not Move the Icon Rows)
-#
-#icon_row_move -1
-
-# Finetune the OS icon row position set by the 'icon_row_move' setting. This
-# token accepts positive/negative pixel values which are used to adjust the
-# position of icon rows on the main RefindPlus screen. This adjustment may
-# be needed to finetune the 'icon_row_move' outcome upwards or downwards.
-#
-# Defaults to Zero When Commented Out (Does Not Adjust the Icon Rows)
-#
-#icon_row_tune 5
-
 # RefindPlus will display up to 10 available Snapshot instances for BtrFS
 # entries by default. These can be accessed by pressing "F2" or "Insert",
 # after which the snapshots will appear as submenu items (along with
@@ -663,6 +640,42 @@
 # Inactive When Commented Out (Does Not Use a Custom Text Renderer)
 #
 #renderer_text
+
+# Offset the OS icon row position on the main screen vertically from the default.
+# This token accepts positive/negative indicative flags that indicate the offset
+# position of OS icons on the main RefindPlus screen. Such offsets may be useful
+# when the default position of the icon row clashes with parts of custom banners.
+#
+# The applicable flags are:
+#   1    - Move icon rows to the upper third of the screen
+#   0    - Maintain default icon row position (mid screen)
+#  -1    - Move icon rows to the lower third of the screen
+#
+# Defaults to Zero When Commented Out (Does Not Move the Icon Rows)
+#
+#row_icons_move -1
+
+# Finetune the OS icon row position set by the 'row_icons_move' setting. This
+# token accepts positive/negative pixel values which are used to adjust the
+# position of icon rows on the main RefindPlus screen. This adjustment may
+# be needed to finetune the 'row_icons_move' outcome upwards or downwards.
+#
+# Defaults to Zero When Commented Out (Does Not Adjust the Icon Rows)
+#
+#row_icons_tune 5
+
+# Separately move tool icons down beyond the 'row_icons_move/tune' settings.
+# Negative pixel values move the tools down. Positive values reset the offset to zero.
+# The selection highlight, shared entry label and timeout follow the tools.
+# Extra movement is limited by the space above hints (or the screen bottom
+# when hints are hidden). If the default layout already has no room, tools
+# stay at their usual separation below loaders. Tools or text may be clipped.
+#
+# NB: Ignored when no tool icons are displayed, such as in Text Mode.
+#
+# Defaults to Zero When Commented Out (Preserves the Existing Layout)
+#
+#row_tools_tune -40
 
 # RefindPlus will automatically scale icons and text when certain resolutions
 # are detected. The detection is basic and based on detecting a minimum 1601px

@@ -356,6 +356,40 @@ VOID HandleSignedInt (
     }
 } // static VOID HandleSignedInt()
 
+// Parse a tool row offset without overflowing on large decimal input.
+// Invalid values leave the previous setting unchanged.
+static
+VOID HandleRowToolsTune (
+    IN CHAR16 *Token
+) {
+    BOOLEAN Negative;
+    UINTN   Digit;
+    UINTN   Magnitude;
+    UINTN   Limit;
+
+
+    Negative = (*Token == L'-');
+    if (*Token == L'-' || *Token == L'+') {
+        Token++;
+    }
+    if (*Token == L'\0') {
+        return;
+    }
+
+    Magnitude = 0;
+    Limit = (~(UINTN) 0) >> 1;
+    while (*Token != L'\0') {
+        if (*Token < L'0' || *Token > L'9') {
+            return;
+        }
+        Digit = *Token++ - L'0';
+        Magnitude = (Magnitude > (Limit - Digit) / 10)
+            ? Limit : Magnitude * 10 + Digit;
+    }
+
+    GlobalConfig.RowToolsTune = Negative ? -(INTN) Magnitude : 0;
+} // static VOID HandleRowToolsTune()
+
 // Handle a parameter with a single integer argument (unsigned)
 static
 VOID HandleUnsignedInt (
@@ -4494,7 +4528,10 @@ VOID ReadConfig (
         }
         else if (
             TokenCount == 2 &&
-            MyStriCmp (TokenList[0], L"icon_row_move")
+            (
+                MyStriCmp (TokenList[0], L"row_icons_move") ||
+                MyStriCmp (TokenList[0], L"icon_row_move")
+            )
         ) {
             #if REFIT_DEBUG > 0
             if (!OuterLoop) {
@@ -4507,12 +4544,15 @@ VOID ReadConfig (
             // DA-TAG: Signed integer as *MAY* have negative value input
             HandleSignedInt (
                 TokenList, TokenCount,
-                &(GlobalConfig.IconRowMove)
+                &(GlobalConfig.RowIconsMove)
             );
         }
         else if (
             TokenCount == 2 &&
-            MyStriCmp (TokenList[0], L"icon_row_tune")
+            (
+                MyStriCmp (TokenList[0], L"row_icons_tune") ||
+                MyStriCmp (TokenList[0], L"icon_row_tune")
+            )
         ) {
             #if REFIT_DEBUG > 0
             if (!OuterLoop) {
@@ -4525,11 +4565,25 @@ VOID ReadConfig (
             // DA-TAG: Signed integer as *MAY* have negative value input
             HandleSignedInt (
                 TokenList, TokenCount,
-                &(GlobalConfig.IconRowTune)
+                &(GlobalConfig.RowIconsTune)
             );
 
             // Store as opposite number
-            GlobalConfig.IconRowTune *= -1;
+            GlobalConfig.RowIconsTune *= -1;
+        }
+        else if (
+            TokenCount == 2 &&
+            MyStriCmp (TokenList[0], L"row_tools_tune")
+        ) {
+            #if REFIT_DEBUG > 0
+            if (!OuterLoop) {
+                UpdatedToken = LogUpdate (
+                    TokenList[0], NotRunBefore, TRUE
+                );
+            }
+            #endif
+
+            HandleRowToolsTune (TokenList[1]);
         }
         else if (
             TokenCount == 2 &&
