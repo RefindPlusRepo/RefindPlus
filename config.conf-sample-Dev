@@ -609,15 +609,14 @@
 #
 #row_icons_tune 5
 
-# Independently finetune the EFI tools row after the icon row settings above.
-# Positive pixel values move the tools up; negative values move them down,
-# matching the direction of 'row_icons_tune'. The OS icons stay in place.
+# Separately move tool icons down beyond the 'row_icons_move/tune' settings.
+# Negative pixel values move the tools down. Positive values reset the offset to zero.
 # The selection highlight, shared entry label and timeout follow the tools.
-# Nonzero offsets are bounded to keep the tools and text above the hints
-# (or the screen bottom when hints are hidden). On screens too small for
-# the complete group, it is placed at the top and may be clipped.
-# Choose an offset that avoids overlapping the OS icons or banner.
-# Ignored in text mode and when no tools are displayed.
+# Extra movement is limited by the space above hints (or the screen bottom
+# when hints are hidden). If the default layout already has no room, tools
+# stay at their usual separation below loaders. Tools or text may be clipped.
+#
+# NB: Ignored when no tool icons are displayed, such as in Text Mode.
 #
 # Defaults to Zero When Commented Out (Preserves the Existing Layout)
 #

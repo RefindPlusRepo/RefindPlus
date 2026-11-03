@@ -359,21 +359,6 @@ VOID UpdateScroll (
 ) {
     State->PreviousSelection = State->CurrentSelection;
 
-    // Follow the displayed row order when tuning moves tools above loaders.
-    // Compare centres so overlapping rows have a consistent direction.
-    if (State->ScrollMode == SCROLL_MODE_ICONS &&
-        GlobalConfig.RowToolsTune != 0 &&
-        IconRowCount != 0 && ToolRowCount != 0 &&
-        ToolRowPosY + TileSizes[1] / 2 < IconRowPosY + TileSizes[0] / 2
-    ) {
-        if (Movement == SCROLL_LINE_UP) {
-            Movement = SCROLL_LINE_DOWN;
-        }
-        else if (Movement == SCROLL_LINE_DOWN) {
-            Movement = SCROLL_LINE_UP;
-        }
-    }
-
     switch (Movement) {
         case SCROLL_NONE:
             // Do Nothing
@@ -1164,16 +1149,6 @@ VOID PaintSelection (
     UINTN YPosPrev;
     UINTN YPosCur;
 
-
-    // Redraw both rows when tuned tools overlap loaders. Repainting a single
-    // loader would otherwise erase tools drawn over its selection background.
-    if (GlobalConfig.RowToolsTune != 0 && ToolRowCount != 0 &&
-        row1PosY < row0PosY + TileSizes[0] &&
-        row0PosY < row1PosY + TileSizes[1]
-    ) {
-        MainMenuStyle (Screen, State, MENU_FUNCTION_PAINT_ALL, NULL);
-        return;
-    }
 
     if ((State->CurrentSelection < State->InitialRow1) &&
         (
@@ -1996,12 +1971,11 @@ static
 UINTN ComputeToolRowPosY (
     IN UINTN DefaultPosY
 ) {
-    INTN Offset;
-    INTN Position;
+    UINTN Available;
     INTN MaxPosition;
 
 
-    if (GlobalConfig.RowToolsTune == 0 || ToolRowCount == 0) {
+    if (GlobalConfig.RowToolsTune >= 0 || ToolRowCount == 0) {
         return DefaultPosY;
     }
 
@@ -2012,28 +1986,17 @@ UINTN ComputeToolRowPosY (
     if (!(GlobalConfig.HideUIFlags & HIDEUI_FLAG_HINTS)) {
         MaxPosition -= 3 * (INTN) egGetFontHeight();
     }
-    if (MaxPosition < 0) {
-        MaxPosition = 0;
+    // On cramped screens preserve the original row separation.
+    if (MaxPosition <= 0 || DefaultPosY >= (UINTN) MaxPosition) {
+        return DefaultPosY;
     }
 
-    // Bound the operands before signed subtraction, including extreme input.
-    Position = (DefaultPosY > ScreenH) ? (INTN) ScreenH : (INTN) DefaultPosY;
-    Offset = GlobalConfig.RowToolsTune;
-    if (Offset > (INTN) ScreenH) {
-        Offset = (INTN) ScreenH;
-    }
-    else if (Offset < -(INTN) ScreenH) {
-        Offset = -(INTN) ScreenH;
-    }
-    Position -= Offset;
-    if (Position < 0) {
-        Position = 0;
-    }
-    else if (Position > MaxPosition) {
-        Position = MaxPosition;
+    Available = (UINTN) MaxPosition - DefaultPosY;
+    if (GlobalConfig.RowToolsTune <= -(INTN) Available) {
+        return (UINTN) MaxPosition;
     }
 
-    return (UINTN) Position;
+    return DefaultPosY + (UINTN) -GlobalConfig.RowToolsTune;
 } // static UINTN ComputeToolRowPosY()
 
 static
@@ -3675,14 +3638,7 @@ UINTN FindMainMenuItem (
     row1PosX     =   ToolRowPosX;
     row1PosY     =   ToolRowPosY;
 
-    // Tuned tools are painted over loaders if the rows overlap.
-    if (GlobalConfig.RowToolsTune != 0 && ToolRowCount != 0 &&
-        PosY >= row1PosY && PosY <= row1PosY + TileSizes[1] &&
-        PosX >= row1PosX && PosX < ScreenW - row1PosX
-    ) {
-        itemRow = 1;
-    }
-    else if (PosY >= row0PosY && PosY <= row0PosY + TileSizes[0]) {
+    if (PosY >= row0PosY && PosY <= row0PosY + TileSizes[0]) {
         if (PosX <= row0PosX) {
             // Early Return
             return POINTER_LEFT_ARROW;

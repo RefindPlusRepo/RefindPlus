@@ -387,8 +387,7 @@ VOID HandleRowToolsTune (
             ? Limit : Magnitude * 10 + Digit;
     }
 
-    GlobalConfig.RowToolsTune = (Negative)
-        ? -(INTN) Magnitude : (INTN) Magnitude;
+    GlobalConfig.RowToolsTune = Negative ? -(INTN) Magnitude : 0;
 } // static VOID HandleRowToolsTune()
 
 // Handle a parameter with a single integer argument (unsigned)
